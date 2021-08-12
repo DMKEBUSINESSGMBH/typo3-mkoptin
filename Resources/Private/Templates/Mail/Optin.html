@@ -1,0 +1,20 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<f:variable name="mailSubject">Opt In Process</f:variable>
+
+<p>
+    bitte bestätigen Sie Ihre E-Mail {optin.email}:<br/>
+    Aktivierungslink:
+    <f:link.action extensionName="mkoptin" pluginName="Optin" controller="Optin" action="validation"
+                   pageUid="{settings.validationPid}" absolute="1" arguments="{key : optinkey}">
+        <f:uri.action extensionName="mkoptin" pluginName="Optin" controller="Optin" action="validation"
+                      pageUid="{settings.validationPid}" absolute="1" arguments="{key : optinkey}"/>
+    </f:link.action>
+</p>
+<p>
+    Vielen Dank und herzliche Grüße
+</p>
+
+</html>

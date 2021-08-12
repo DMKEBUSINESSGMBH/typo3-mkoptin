@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext" original="messages" date="2015-03-30T11:42:09Z">
+        <header>
+            <generator>LFEditor</generator>
+        </header>
+        <body>
+
+            <trans-unit id="tt_content.list_type_optin" xml:space="preserve">
+                <source>Optin</source>
+            </trans-unit>
+
+            <trans-unit id="tx_mkoptin_domain_model_optin">
+                <source>OptIn</source>
+            </trans-unit>
+            <trans-unit id="tx_mkoptin_domain_model_optin.email">
+                <source>Email</source>
+            </trans-unit>
+            <trans-unit id="tx_mkoptin_domain_model_optin.is_validated">
+                <source>Is Validated</source>
+            </trans-unit>
+            <trans-unit id="tx_mkoptin_domain_model_optin.validation_hash">
+                <source>Validation Hash</source>
+            </trans-unit>
+            <trans-unit id="tx_mkoptin_domain_model_optin.validation_date">
+                <source>Validation Date</source>
+            </trans-unit>
+            <trans-unit id="tx_mkoptin_domain_model_optin.nomail">
+                <source>Could not find optin data. Contact has no mail.</source>
+            </trans-unit>
+            <trans-unit id="tx_mkoptin_domain_model_optin.nooptin">
+                <source>Could not find optin data.</source>
+            </trans-unit>
+
+
+        </body>
+    </file>
+</xliff>

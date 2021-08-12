@@ -1,0 +1,19 @@
+plugin {
+    tx_mkoptin {
+        view {
+            pluginNamespace = mkoptin
+
+            templateRootPaths {
+                0 = EXT:mkoptin/Resources/Private/Templates/
+            }
+
+            partialRootPaths {
+                0 = EXT:mkoptin/Resources/Private/Partials/
+            }
+
+            layoutRootPaths {
+                0 = EXT:mkoptin/Resources/Private/Layouts/
+            }
+        }
+    }
+}

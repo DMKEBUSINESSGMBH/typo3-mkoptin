@@ -1,0 +1,26 @@
+{
+    "name": "dmk/mkoptin",
+    "description": "MK Optin Extension",
+    "type": "typo3-cms-extension",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Michael Wagner",
+            "email": "michael.wagner@dmk-ebusiness.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "DMK\\Optin\\": "Classes",
+            "DMK\\Optin\\Tests\\": "Tests/Unit"
+        }
+    },
+    "require-dev": {
+        "nimut/testing-framework": "^5.0"
+    },
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "mkoptin"
+        }
+    }
+}

@@ -1,0 +1,30 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    DMK\Optin\:
+        resource: '../Classes/*'
+        exclude: '../Classes/Domain/Model/*'
+
+    DMK\Optin\Domain\Manager\OptinManager:
+        public: true
+        arguments: [ '@mkoptin.repository.optin', '@mkoptin.crypto.optinkey', '@mkoptin.mailprocessor' ]
+
+    mkoptin.manager.optin:
+        alias: DMK\Optin\Domain\Manager\OptinManager
+
+    mkoptin.crypto.optinkey:
+        alias: DMK\Optin\Crypto\OptinKeyCrypto
+
+    mkoptin.mailprocessor:
+        alias: DMK\Optin\Mail\MailProcessor
+
+    mkoptin.repository.optin:
+        class: DMK\Optin\Domain\Repository\OptinRepository
+        arguments: [ '@t3core.connection.default' ]
+
+    t3core.connection.default:
+        class: TYPO3\CMS\Core\Database\Connection
+        factory: [ '@DMK\Optin\Domain\Database\ConnectionFactory', 'getDefaultConnection' ]
