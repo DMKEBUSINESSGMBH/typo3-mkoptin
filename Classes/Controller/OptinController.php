@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace DMK\Optin\Controller;
 
 use DMK\Optin\Domain\Manager\OptinManager;
+use DMK\Optin\Event\OptinValidationSuccessEvent;
 use LogicException;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
@@ -52,7 +53,12 @@ class OptinController extends ActionController
             }
 
             if (null !== $optin) {
-                // @TODO: add event/signal
+                $this->view->assign(
+                    'optin',
+                    $this->eventDispatcher->dispatch(
+                        new OptinValidationSuccessEvent($optin)
+                    )->getOptin()
+                );
             }
         }
 

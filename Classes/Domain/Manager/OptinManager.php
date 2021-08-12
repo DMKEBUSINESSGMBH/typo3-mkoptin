@@ -49,10 +49,17 @@ class OptinManager
     protected function findOptinByEmail(string $email): ?Optin
     {
         if (empty($email)) {
-            throw new LogicException('Contact has no mail to find optin.');
+            throw new LogicException('Email is required to find optin.');
         }
 
         return $this->optinRepository->findOneByEmail($email);
+    }
+
+    public function isEmailValidated(string $email): bool
+    {
+        $optin = $this->findOptinByEmail($email);
+
+        return null !== $optin && $optin->isValidated();
     }
 
     /**
