@@ -6,7 +6,15 @@
 
 bitte bestätigen Sie Ihre E-Mail {optin.email}:
 Aktivierungslink:
-<f:uri.action extensionName="mkoptin" pluginName="Optin" controller="Optin" action="validation" pageUid="{settings.validationPid}" absolute="1" arguments="{key : optinkey}" />
+<f:uri.action
+    extensionName="mkoptin"
+    pluginName="Optin"
+    controller="Optin"
+    action="validation"
+    pageUid="{settings.validationPid}"
+    absolute="1"
+    arguments="{key : optinkey}"
+/>
 
 Vielen Dank und herzliche Grüße
 
