@@ -46,7 +46,7 @@ class OptinManager
     /**
      * Find a optin entity by mail address.
      */
-    protected function findOptinByEmail(string $email): ?Optin
+    public function findOptinByEmail(string $email): ?Optin
     {
         if (empty($email)) {
             throw new LogicException('Email is required to find optin.');

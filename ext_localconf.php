@@ -15,13 +15,17 @@ if (!defined('TYPO3_MODE')) {
     exit('Access denied.');
 }
 
-\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-    'MkOptin',
-    'Optin',
-    [
-        \DMK\Optin\Controller\OptinController::class => 'validation',
-    ],
-    [
-        \DMK\Optin\Controller\OptinController::class => 'validation',
-    ]
+call_user_func(
+    function () {
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+            'MkOptin',
+            'Optin',
+            [
+                \DMK\Optin\Controller\OptinController::class => 'validation',
+            ],
+            [
+                \DMK\Optin\Controller\OptinController::class => 'validation',
+            ]
+        );
+    }
 );
