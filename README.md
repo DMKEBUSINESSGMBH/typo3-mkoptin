@@ -41,8 +41,8 @@ class MyAwesomeManager
 
 ## Registrieren eines Event-Listeners
 
-Warum? Um dinge zu tun, nachdem die E-Mail verifiziert wurde, beispielsweise umd
-en Datensatz zu aktivieren, oder Bestätigungs-E-Mails zu versenden.
+Warum? Um dinge zu tun, nachdem die E-Mail verifiziert wurde, beispielsweise um
+den Datensatz zu aktivieren, oder Bestätigungs-E-Mails zu versenden.
 
 ```yaml
 services:
@@ -99,5 +99,22 @@ return [
 ];
 ```
 
-Aktuell muss das Feld im Datensatz immer `email` lauten. @TODO:
+Aktuell muss das Feld im Datensatz immer `email` lauten.
+
+## Templates
+
+```typo3_typoscript
+plugin {
+    tx_mkoptin {
+        view {
+            templateRootPath = EXT:myawesomeextension/Resources/Private/Templates/Optin
+            partialRootPath = EXT:myawesomeextension/Resources/Private/Partials/Optin
+            layoutRootPath = EXT:myawesomeextension/Resources/Private/Layouts/Optin
+        }
+    }
+}
+```
+
+## @TODOs
+
 Tabellen-Email-Feld-Konfiguration implementieren.

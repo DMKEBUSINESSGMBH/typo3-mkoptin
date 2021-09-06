@@ -5,14 +5,15 @@ plugin {
 
             templateRootPaths {
                 0 = EXT:mkoptin/Resources/Private/Templates/
+                10 = {$plugin.tx_mkoptin.view.templateRootPath}
             }
-
             partialRootPaths {
                 0 = EXT:mkoptin/Resources/Private/Partials/
+                10 = {$plugin.tx_mkoptin.view.partialRootPath}
             }
-
             layoutRootPaths {
                 0 = EXT:mkoptin/Resources/Private/Layouts/
+                10 = {$plugin.tx_mkoptin.view.layoutRootPath}
             }
         }
     }
