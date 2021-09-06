@@ -28,11 +28,11 @@ use TYPO3\CMS\Fluid\View\TemplatePaths;
  */
 class FluidView extends StandaloneView
 {
-    public function __construct()
+    public function __construct(string $packageName = 'mkoptin')
     {
         parent::__construct();
 
-        $this->getRenderingContext()->setTemplatePaths(new TemplatePaths('pwrkjobagent'));
+        $this->getRenderingContext()->setTemplatePaths(new TemplatePaths($packageName));
         $this->assignSettings();
     }
 

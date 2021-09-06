@@ -28,6 +28,19 @@ use TYPO3\CMS\Core\Utility\MailUtility;
  */
 class MailProcessor
 {
+    protected function createView(
+        string $templateName,
+        array $viewVariables
+    ): FluidView {
+        /* @var FluidView $view */
+        $view = GeneralUtility::makeInstance(FluidView::class);
+
+        $view->setTemplate($templateName);
+        $view->assignMultiple($viewVariables);
+
+        return $view;
+    }
+
     /**
      * @param array<string, mixed> $viewVariables
      */
@@ -35,11 +48,7 @@ class MailProcessor
         string $templateName,
         array $viewVariables
     ): MailMessage {
-        /* @var FluidView $view */
-        $view = GeneralUtility::makeInstance(FluidView::class);
-
-        $view->setTemplate($templateName);
-        $view->assignMultiple($viewVariables);
+        $view = $this->createView($templateName, $viewVariables);
 
         /* @var MailMessage $mail */
         $mail = GeneralUtility::makeInstance(MailMessage::class);
