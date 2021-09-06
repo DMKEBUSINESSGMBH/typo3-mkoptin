@@ -15,15 +15,108 @@
             "DMK\\Optin\\Tests\\": "Tests/Unit"
         }
     },
+    "require": {
+        "typo3/cms-core": "^10.4",
+        "typo3/cms-backend": "^10.4",
+        "typo3/cms-extbase": "^10.4",
+        "typo3/cms-fluid": "^10.4"
+    },
     "require-dev": {
+        "captainhook/captainhook": "^5.4",
+        "php-parallel-lint/php-parallel-lint": "^1.2",
+        "helmich/typo3-typoscript-lint": "^2.3",
+        "sebastian/phpcpd": "^5.0",
+        "friendsofphp/php-cs-fixer": "^2.18",
+        "phpmd/phpmd": "^2.9",
+        "phpstan/phpstan": "^0.12.8",
+        "phpstan/extension-installer": "^1.0",
+        "saschaegerer/phpstan-typo3": "^0.13",
         "nimut/testing-framework": "^5.0"
+    },
+    "config": {
+        "vendor-dir": ".Build/vendor",
+        "bin-dir": ".Build/bin",
+        "preferred-install": {
+            "typo3/cms": "source"
+        }
     },
     "extra": {
         "branch-alias": {
             "dev-10.4": "10.4.x-dev"
         },
         "typo3/cms": {
-            "extension-key": "mkoptin"
+            "cms-package-dir": "{$vendor-dir}/typo3/cms",
+            "extension-key": "mkoptin",
+            "web-dir": ".Build/Web",
+            "app-dir": ".Build"
         }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "[ -e .Build/bin/captainhook ] && .Build/bin/captainhook install -f -s || echo 'CaptainHook missing, skip install.'",
+            "mkdir -p .Build/Web/typo3conf/ext/",
+            "[ -L .Build/Web/typo3conf/ext/mkoptin ] || ln -snvf ../../../../. .Build/Web/typo3conf/ext/mkoptin",
+            "[ -f .Build/Web/typo3conf/LocalConfiguration.php ] || cp Tests/Fixtures/LocalConfiguration.php .Build/Web/typo3conf/LocalConfiguration.php"
+        ],
+        "runqs": [
+            "@fix",
+            "@lint",
+            "@test"
+        ],
+        "lint:php": [
+            "[ -e .Build/bin/parallel-lint ] || composer update",
+            ".Build/bin/parallel-lint --exclude .Build ./"
+        ],
+        "lint:yaml": [
+            "[ -e .Build/bin/yaml-lint ] || composer update",
+            ".Build/bin/yaml-lint --ansi -n -v ./Configuration"
+        ],
+        "lint:yamldocker": [
+            "[ -x \"$(command -v docker)\" ] && docker run --rm -v \"$PWD:/yaml\" sdesbure/yamllint yamllint -f colored -c .yamllint ./Configuration"
+        ],
+        "lint:typoscript": [
+            "[ -e .Build/bin/typoscript-lint ] || composer update",
+            ".Build/bin/typoscript-lint --ansi -v --fail-on-warnings"
+        ],
+        "lint": [
+            "@lint:php",
+            "@lint:yaml",
+            "@lint:typoscript"
+        ],
+        "test:phpcs": [
+            "[ -e .Build/bin/php-cs-fixer ] || composer update",
+            ".Build/bin/php-cs-fixer fix -v --dry-run --diff"
+        ],
+        "test:phpmd": [
+            "[ -e .Build/bin/phpmd ] || composer update",
+            ".Build/bin/phpmd ./Classes text phpmd.xml",
+            ".Build/bin/phpmd ./Tests text phpmd.xml"
+        ],
+        "test:phpstan": [
+            "[ -e .Build/bin/phpstan ] || composer update",
+            ".Build/bin/phpstan analyse -c phpstan.neon --memory-limit=512M"
+        ],
+        "test:phpcpd": [
+            "[ -e .Build/bin/phpcpd ] || composer update",
+            "(test \"$(php -v | grep \"Xdebug v3\" | wc -l)\" = 0 && bin/phpcpd ./Classes) | true"
+        ],
+        "test:phpunit": [
+            "[ -e .Build/bin/phpunit ] || composer update",
+            ".Build/bin/phpunit -c phpunit.xml --whitelist=./Classes"
+        ],
+        "test": [
+            "@test:phpcs",
+            "@test:phpmd",
+            "@test:phpstan",
+            "@test:phpcpd",
+            "@test:phpunit"
+        ],
+        "fix:phpcs": [
+            "[ -e .Build/bin/php-cs-fixer ] || composer update",
+            ".Build/bin/php-cs-fixer fix -v"
+        ],
+        "fix": [
+            "@fix:phpcs"
+        ]
     }
 }

@@ -8,9 +8,23 @@ declare(strict_types=1);
  * (c) 2021 DMK E-BUSINESS GmbH <dev@dmk-ebusiness.de>
  * All rights reserved
  *
- * This file is part of the PWRK Jobs in Town TYPO3 Project.
+ * This file is part of the "mkoptin" Extension for TYPO3 CMS.
  *
- * It is proprietary, do not copy this script!
+ * This script is part of the TYPO3 project. The TYPO3 project is
+ * free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * The GNU General Public License can be found at
+ * www.gnu.org/copyleft/gpl.html
+ *
+ * This script is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * This copyright notice MUST APPEAR in all copies of the script!
  */
 
 namespace DMK\Optin\Domain\Mapper;
@@ -18,6 +32,7 @@ namespace DMK\Optin\Domain\Mapper;
 use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
+use DMK\Optin\Domain\Model\AbstractEntity;
 use DMK\Optin\Domain\Model\EntityInterface;
 
 /**
@@ -28,26 +43,36 @@ use DMK\Optin\Domain\Model\EntityInterface;
 abstract class AbstractMapper
 {
     /**
-     * @param array<string, string> $result
+     * @param array<string, string> $record
      */
     public static function mapDefaultsFromRecord(array $record, EntityInterface $entity): EntityInterface
     {
-        $entity->setUid((int) $record['uid']);
-        $entity->setPid((int) $record['pid'] ?: 0);
-        $entity->setDeleted($record['deleted'] > 0);
-        $entity->setHidden($record['hidden'] > 0);
+        if ($entity instanceof AbstractEntity) {
+            $entity->setUid((int) $record['uid']);
+            $entity->setPid((int) $record['pid'] ?: 0);
+            $entity->setDeleted($record['deleted'] > 0);
+            $entity->setHidden($record['hidden'] > 0);
+        }
 
         return $entity;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected static function mapDefaultsToArray(EntityInterface $entity): array
     {
-        return [
+        $record = [
             'uid' => $entity->getUid(),
-            'pid' => $entity->getPid(),
-            'deleted' => (int) $entity->isDeleted(),
-            'hidden' => (int) $entity->isHidden(),
         ];
+
+        if ($entity instanceof AbstractEntity) {
+            $record['pid'] = $entity->getPid();
+            $record['deleted'] = (int) $entity->isDeleted();
+            $record['hidden'] = (int) $entity->isHidden();
+        }
+
+        return $record;
     }
 
     protected static function mapDateToString(?DateTimeInterface $date = null): ?string
@@ -56,8 +81,10 @@ abstract class AbstractMapper
             return null;
         }
 
-        $date = clone $date;
-        $date->setTimezone(new DateTimeZone('UTC'));
+        if (method_exists($date, 'setTimezone')) {
+            $date = clone $date;
+            $date->setTimezone(new DateTimeZone('UTC'));
+        }
 
         return $date->format('Y-m-d H:i:s');
     }

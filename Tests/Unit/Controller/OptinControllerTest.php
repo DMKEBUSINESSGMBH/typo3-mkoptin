@@ -27,14 +27,22 @@ declare(strict_types=1);
  * This copyright notice MUST APPEAR in all copies of the script!
  */
 
-namespace DMK\Optin\Domain\Model;
+namespace DMK\Optin\Tests\Controller;
+
+use Nimut\TestingFramework\TestCase\AbstractTestCase as NimutTestingFrameworkTestCase;
 
 /**
- * Entity Interface.
+ * OptinController test.
  *
  * @author Michael Wagner
  */
-interface EntityInterface
+class OptinControllerTest extends NimutTestingFrameworkTestCase
 {
-    public function getUid(): int;
+    /**
+     * @test
+     */
+    public function validationAction()
+    {
+        $this->markTestIncomplete();
+    }
 }

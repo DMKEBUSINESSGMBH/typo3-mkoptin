@@ -1,0 +1,7 @@
+parameters:
+    level: 6
+    paths:
+        - %currentWorkingDirectory%/Classes
+    reportUnmatchedIgnoredErrors: false
+    ignoreErrors:
+        - '#Constant TYPO3_MODE not found#'

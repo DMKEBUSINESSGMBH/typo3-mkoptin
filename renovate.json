@@ -1,0 +1,10 @@
+{
+  "extends": [
+    "config:base",
+    ":preserveSemverRanges",
+    ":disableMajorUpdates",
+    ":automergePatch",
+    ":automergePr",
+    "schedule:weekly"
+  ]
+}

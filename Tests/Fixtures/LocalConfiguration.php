@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * Copyright notice
  *
@@ -27,14 +25,4 @@ declare(strict_types=1);
  * This copyright notice MUST APPEAR in all copies of the script!
  */
 
-namespace DMK\Optin\Domain\Model;
-
-/**
- * Entity Interface.
- *
- * @author Michael Wagner
- */
-interface EntityInterface
-{
-    public function getUid(): int;
-}
+return [];

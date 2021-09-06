@@ -1,0 +1,12 @@
+image: registry.dmknet.de/dmk/ci/docker/php:7.4
+
+include:
+    -
+        project: 'dmk/ci/templates'
+        ref: 'master'
+        file: '/Pipelines/TYPO3Extension.gitlab-ci.yml'
+
+variables:
+    https_proxy: ''
+    PHPMD_RULESET: 'phpmd.xml'
+    PHPUNIT_CONFIG_FILE: 'phpunit.xml'
