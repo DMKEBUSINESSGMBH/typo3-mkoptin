@@ -19,6 +19,9 @@
         "nimut/testing-framework": "^5.0"
     },
     "extra": {
+        "branch-alias": {
+            "dev-10.4": "10.4.x-dev"
+        },
         "typo3/cms": {
             "extension-key": "mkoptin"
         }
