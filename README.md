@@ -99,7 +99,9 @@ return [
 ];
 ```
 
-Aktuell muss das Feld im Datensatz immer `email` lauten.
+![OptIn State Element][OptInStateElement]
+
+Wichtig: Aktuell muss das Feld im Datensatz immer `email` lauten!
 
 ## Templates
 
@@ -118,3 +120,6 @@ plugin {
 ## @TODOs
 
 Tabellen-Email-Feld-Konfiguration implementieren.
+
+
+[OptInStateElement]: Documentation/Images/OptInStateElement.png "OptIn State Element"
