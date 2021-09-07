@@ -27,30 +27,29 @@ declare(strict_types=1);
  * This copyright notice MUST APPEAR in all copies of the script!
  */
 
-namespace DMK\Optin\Domain\Mapper;
+namespace DMK\Optin\Tests\Domain\Model;
 
-use DMK\Optin\Domain\Model\EntityInterface;
-use Doctrine\DBAL\Driver\Result as QueryResult;
+use DMK\Optin\Domain\Model\AbstractEntity;
 
 /**
- * MapperInterface.
+ * AbstractEntity test.
  *
  * @author Michael Wagner
  */
-interface MapperInterface
+class AbstractEntityTest extends AbstractModelTestCase
 {
-    /**
-     * @return array<int, EntityInterface>
-     */
-    public function fromResults(QueryResult $result): array;
+    protected function getModelClass(): string
+    {
+        return AbstractEntity::class;
+    }
 
-    /**
-     * @param array<string, string> $record
-     */
-    public function fromRecord(array $record): EntityInterface;
-
-    /**
-     * @return array<string, mixed>
-     */
-    public function toArray(EntityInterface $entity): array;
+    protected function getModelProperties(): array
+    {
+        return [
+            'uid' => 5,
+            'pid' => 7,
+            'deleted' => true,
+            'hidden' => true,
+        ];
+    }
 }

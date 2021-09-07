@@ -63,7 +63,7 @@ class OptinController extends ActionController
                 $this->optinManager->validateByKey((string) $optinKey);
                 $success = true;
             } catch (LogicException $exception) {
-                // if the kay cant be resolved or something else, show failure in template.
+                // if the kay can't be resolved or something else, show failure in template.
             }
 
             if (null !== $optin) {

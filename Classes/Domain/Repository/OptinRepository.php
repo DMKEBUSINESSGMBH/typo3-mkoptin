@@ -29,7 +29,6 @@ declare(strict_types=1);
 
 namespace DMK\Optin\Domain\Repository;
 
-use DMK\Optin\Domain\Mapper\OptinMapper;
 use DMK\Optin\Domain\Model\Optin;
 use Doctrine\DBAL\Driver\Result;
 
@@ -43,14 +42,6 @@ class OptinRepository extends AbstractRepository
     protected function getTableName(): string
     {
         return 'tx_mkoptin_domain_model_optin';
-    }
-
-    /**
-     * @return class-string
-     */
-    protected function getMapperClass(): string
-    {
-        return OptinMapper::class;
     }
 
     public function findOneByEmail(string $email): ?Optin
@@ -71,6 +62,12 @@ class OptinRepository extends AbstractRepository
             return null;
         }
 
-        return $this->getMapperClass()::fromRecord($optin)->getEntity();
+        $optin = $this->mapper->fromRecord($optin);
+
+        if (!$optin instanceof Optin) {
+            return null;
+        }
+
+        return $optin;
     }
 }

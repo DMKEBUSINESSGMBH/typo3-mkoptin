@@ -29,7 +29,17 @@ declare(strict_types=1);
 
 namespace DMK\Optin\Tests\Controller;
 
+use DMK\Optin\Controller\OptinController;
+use DMK\Optin\Domain\Manager\OptinManager;
+use DMK\Optin\Domain\Model\Optin;
+use DMK\Optin\Event\OptinValidationSuccessEvent;
+use LogicException;
 use Nimut\TestingFramework\TestCase\AbstractTestCase as NimutTestingFrameworkTestCase;
+use Prophecy\Argument;
+use Prophecy\Prophecy\ObjectProphecy;
+use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;
+use TYPO3\CMS\Extbase\Mvc\Request as ExtbaseRequest;
+use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 
 /**
  * OptinController test.
@@ -38,11 +48,64 @@ use Nimut\TestingFramework\TestCase\AbstractTestCase as NimutTestingFrameworkTes
  */
 class OptinControllerTest extends NimutTestingFrameworkTestCase
 {
+    private ?OptinController $controller = null;
+    private ?ObjectProphecy $optinManager = null;
+    private ?ObjectProphecy $request = null;
+    private ?ObjectProphecy $eventDispatcher = null;
+    private ?ObjectProphecy $view = null;
+
+    public function setUp()
+    {
+        $this->optinManager = $this->prophesize(OptinManager::class);
+        $this->request = $this->prophesize(ExtbaseRequest::class);
+        $this->eventDispatcher = $this->prophesize(EventDispatcher::class);
+        $this->view = $this->prophesize(ViewInterface::class);
+        $this->controller = new OptinController($this->optinManager->reveal());
+        $this->inject($this->controller, 'request', $this->request->reveal());
+        $this->inject($this->controller, 'eventDispatcher', $this->eventDispatcher->reveal());
+        $this->inject($this->controller, 'view', $this->view->reveal());
+    }
+
     /**
      * @test
      */
-    public function validationAction()
+    public function validationActionWithoutKey()
     {
-        $this->markTestIncomplete();
+        $this->request->hasArgument('key')->willReturn(false)->shouldBeCalledOnce();
+        $this->view->assign('success', false)->shouldBeCalledOnce();
+        $this->controller->validationAction();
+    }
+
+    /**
+     * @test
+     */
+    public function validationActionWithInvalidKey()
+    {
+        $this->request->hasArgument('key')->willReturn(true)->shouldBeCalledOnce();
+        $this->request->getArgument('key')->willReturn('optinkey')->shouldBeCalledOnce();
+
+        $this->optinManager->getOptinByKey('optinkey')->willThrow(new LogicException())->shouldBeCalledOnce();
+
+        $this->view->assign('success', false)->shouldBeCalledOnce();
+        $this->controller->validationAction();
+    }
+
+    /**
+     * @test
+     */
+    public function validationActionWithValidKey()
+    {
+        $this->request->hasArgument('key')->willReturn(true)->shouldBeCalledOnce();
+        $this->request->getArgument('key')->willReturn('optinkey')->shouldBeCalledOnce();
+
+        $optin = new Optin();
+        $this->optinManager->getOptinByKey('optinkey')->willReturn($optin)->shouldBeCalledOnce();
+        $this->optinManager->validateByKey('optinkey')->shouldBeCalledOnce();
+
+        $this->eventDispatcher->dispatch(Argument::type(OptinValidationSuccessEvent::class))->willReturnArgument()->shouldBeCalledOnce();
+        $this->view->assign('optin', $optin)->shouldBeCalledOnce();
+
+        $this->view->assign('success', true)->shouldBeCalledOnce();
+        $this->controller->validationAction();
     }
 }

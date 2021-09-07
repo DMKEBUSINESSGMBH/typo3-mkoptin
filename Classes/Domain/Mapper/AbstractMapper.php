@@ -29,7 +29,7 @@ declare(strict_types=1);
 
 namespace DMK\Optin\Domain\Mapper;
 
-use DateTimeImmutable;
+use DateTime;
 use DateTimeInterface;
 use DateTimeZone;
 use DMK\Optin\Domain\Model\AbstractEntity;
@@ -45,7 +45,7 @@ abstract class AbstractMapper
     /**
      * @param array<string, string> $record
      */
-    public static function mapDefaultsFromRecord(array $record, EntityInterface $entity): EntityInterface
+    protected function mapDefaultsFromRecord(array $record, EntityInterface $entity): EntityInterface
     {
         if ($entity instanceof AbstractEntity) {
             $entity->setUid((int) $record['uid']);
@@ -60,7 +60,7 @@ abstract class AbstractMapper
     /**
      * @return array<string, mixed>
      */
-    protected static function mapDefaultsToArray(EntityInterface $entity): array
+    protected function mapDefaultsToArray(EntityInterface $entity): array
     {
         $record = [
             'uid' => $entity->getUid(),
@@ -75,7 +75,7 @@ abstract class AbstractMapper
         return $record;
     }
 
-    protected static function mapDateToString(?DateTimeInterface $date = null): ?string
+    protected function mapDateToString(?DateTimeInterface $date = null): ?string
     {
         if (!$date instanceof DateTimeInterface) {
             return null;
@@ -89,14 +89,14 @@ abstract class AbstractMapper
         return $date->format('Y-m-d H:i:s');
     }
 
-    protected static function mapDateFromString(?string $date): ?DateTimeInterface
+    protected function mapDateFromString(?string $date): ?DateTimeInterface
     {
         if (empty($date) || '0000-00-00 00:00:00' === $date) {
             return null;
         }
 
         $utcTimeZone = new DateTimeZone('UTC');
-        $utcDateTime = new DateTimeImmutable($date, $utcTimeZone);
+        $utcDateTime = new DateTime($date, $utcTimeZone);
         $currentTimeZone = new DateTimeZone(date_default_timezone_get());
 
         return $utcDateTime->setTimezone($currentTimeZone);

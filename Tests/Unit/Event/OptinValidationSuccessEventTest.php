@@ -27,30 +27,26 @@ declare(strict_types=1);
  * This copyright notice MUST APPEAR in all copies of the script!
  */
 
-namespace DMK\Optin\Domain\Mapper;
+namespace DMK\Optin\Tests\Controller;
 
-use DMK\Optin\Domain\Model\EntityInterface;
-use Doctrine\DBAL\Driver\Result as QueryResult;
+use DMK\Optin\Domain\Model\Optin;
+use DMK\Optin\Event\OptinValidationSuccessEvent;
+use Nimut\TestingFramework\TestCase\AbstractTestCase as NimutTestingFrameworkTestCase;
 
 /**
- * MapperInterface.
+ * OptinValidationSuccessEvent test.
  *
  * @author Michael Wagner
  */
-interface MapperInterface
+class OptinValidationSuccessEventTest extends NimutTestingFrameworkTestCase
 {
     /**
-     * @return array<int, EntityInterface>
+     * @test
      */
-    public function fromResults(QueryResult $result): array;
-
-    /**
-     * @param array<string, string> $record
-     */
-    public function fromRecord(array $record): EntityInterface;
-
-    /**
-     * @return array<string, mixed>
-     */
-    public function toArray(EntityInterface $entity): array;
+    public function getOptin()
+    {
+        $optin = new Optin();
+        $event = new OptinValidationSuccessEvent($optin);
+        $this->assertSame($optin, $event->getOptin());
+    }
 }

@@ -15,6 +15,9 @@ services:
     mkoptin.manager.optin:
         alias: DMK\Optin\Domain\Manager\OptinManager
 
+    mkoptin.mapper.optin:
+        alias: DMK\Optin\Domain\Mapper\OptinMapper
+
     mkoptin.crypto.optinkey:
         alias: DMK\Optin\Crypto\OptinKeyCrypto
 
@@ -23,7 +26,7 @@ services:
 
     mkoptin.repository.optin:
         class: DMK\Optin\Domain\Repository\OptinRepository
-        arguments: [ '@t3core.connection.default' ]
+        arguments: [ '@t3core.connection.default', '@mkoptin.mapper.optin' ]
 
     t3core.connection.default:
         class: TYPO3\CMS\Core\Database\Connection

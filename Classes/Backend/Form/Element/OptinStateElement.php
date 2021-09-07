@@ -65,15 +65,15 @@ class OptinStateElement extends AbstractFormElement
     {
         $email = $this->findOptinEmailFromTce();
         if (empty($email)) {
-            return '<div style="color:#999;">'.LocalizationUtility::translate(
-                    static::$llFile.':tx_mkoptin_domain_model_optin.nomail'
+            return '<div style="color:#999;">'.$this->translate(
+                    'tx_mkoptin_domain_model_optin.nomail'
                 ).'</div>';
         }
         $optin = $this->getOptinManager()->findOptinByEmail($email);
 
         if (null === $optin) {
-            return '<div style="color:#C99;">'.LocalizationUtility::translate(
-                    static::$llFile.':tx_mkoptin_domain_model_optin.nooptin'
+            return '<div style="color:#C99;">'.$this->translate(
+                    'tx_mkoptin_domain_model_optin.nooptin'
                 ).'</div>';
         }
 
@@ -93,7 +93,7 @@ class OptinStateElement extends AbstractFormElement
         return $this->data['databaseRow'];
     }
 
-    private function getOptinManager(): OptinManager
+    protected function getOptinManager(): OptinManager
     {
         return GeneralUtility::makeInstance(OptinManager::class);
     }
@@ -116,20 +116,27 @@ class OptinStateElement extends AbstractFormElement
     private function renderOptinInformations(Optin $optin): string
     {
         $content = '<!-- optin ['.$optin->getUid().'] -->';
-        $content .= LocalizationUtility::translate(
-                static::$llFile.':tx_mkoptin_domain_model_optin.email'
+        $content .= $this->translate(
+                'tx_mkoptin_domain_model_optin.email'
             ).': '.$optin->getEmail();
         $content .= '<br />';
-        $content .= LocalizationUtility::translate(
-                static::$llFile.':tx_mkoptin_domain_model_optin.is_validated'
+        $content .= $this->translate(
+                'tx_mkoptin_domain_model_optin.is_validated'
             ).': '.($optin->getIsValidated() ? '&#x2714;' : '&#x2716;');
         $content .= '<br />';
         if ($optin->getIsValidated() && $optin->getValidationDate() instanceof DateTime) {
-            $content .= LocalizationUtility::translate(
-                    static::$llFile.':tx_mkoptin_domain_model_optin.validation_date'
+            $content .= $this->translate(
+                    'tx_mkoptin_domain_model_optin.validation_date'
                 ).': '.$optin->getValidationDate()->format(DATE_RSS);
         }
 
-        return '<div style="color:'.($optin->getIsValidated() ? '#060;' : '#C00').';">'.$content.'</div>';
+        return '<div style="color:'.($optin->getIsValidated() ? '#060' : '#C00').';">'.$content.'</div>';
+    }
+
+    protected function translate(string $lllKey): string
+    {
+        return LocalizationUtility::translate(
+            static::$llFile.':'.$lllKey
+        );
     }
 }

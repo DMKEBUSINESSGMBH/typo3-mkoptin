@@ -1,5 +1,8 @@
 # MK Optin
 
+[![pipeline status](https://repo.dmknet.de/typo3-commons/mkoptin/badges/10.4/pipeline.svg)](https://repo.dmknet.de/typo3-commons/mkoptin/-/commits/10.4)
+[![coverage report](https://repo.dmknet.de/typo3-commons/mkoptin/badges/10.4/coverage.svg)](https://repo.dmknet.de/typo3-commons/mkoptin/-/commits/10.4)
+
 Stellt einen Opt-In Prozess bereit.
 
 * Versendet eine Opt-In-E-Mail.

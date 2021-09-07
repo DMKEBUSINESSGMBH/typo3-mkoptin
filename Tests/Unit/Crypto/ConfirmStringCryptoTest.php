@@ -27,30 +27,25 @@ declare(strict_types=1);
  * This copyright notice MUST APPEAR in all copies of the script!
  */
 
-namespace DMK\Optin\Domain\Mapper;
+namespace DMK\Optin\Tests\Crypto;
 
-use DMK\Optin\Domain\Model\EntityInterface;
-use Doctrine\DBAL\Driver\Result as QueryResult;
+use DMK\Optin\Crypto\ConfirmStringCrypto;
+use Nimut\TestingFramework\TestCase\AbstractTestCase as NimutTestingFrameworkTestCase;
 
 /**
- * MapperInterface.
+ * ConfirmStringCrypto test.
  *
  * @author Michael Wagner
  */
-interface MapperInterface
+class ConfirmStringCryptoTest extends NimutTestingFrameworkTestCase
 {
     /**
-     * @return array<int, EntityInterface>
+     * @test
      */
-    public function fromResults(QueryResult $result): array;
-
-    /**
-     * @param array<string, string> $record
-     */
-    public function fromRecord(array $record): EntityInterface;
-
-    /**
-     * @return array<string, mixed>
-     */
-    public function toArray(EntityInterface $entity): array;
+    public function generate()
+    {
+        $util = new ConfirmStringCrypto();
+        $confirmstring = $util->generate();
+        $this->assertEquals(32, strlen($confirmstring));
+    }
 }

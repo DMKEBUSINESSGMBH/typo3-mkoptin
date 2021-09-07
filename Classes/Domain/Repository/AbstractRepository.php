@@ -43,20 +43,15 @@ use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 abstract class AbstractRepository
 {
     protected Connection $connection;
+    protected MapperInterface $mapper;
 
-    public function __construct(Connection $connection)
+    public function __construct(Connection $connection, MapperInterface $mapper)
     {
         $this->connection = $connection;
+        $this->mapper = $mapper;
     }
 
     abstract protected function getTableName(): string;
-
-    /**
-     * Has to be a class name (string) of MapperInterface.
-     *
-     * @return class-string
-     */
-    abstract protected function getMapperClass(): string;
 
     protected function createQueryBuilder(): QueryBuilder
     {
@@ -92,7 +87,7 @@ abstract class AbstractRepository
             return null;
         }
 
-        return $this->getMapperClass()::fromRecord($record)->getEntity();
+        return $this->mapper->fromRecord($record);
     }
 
     public function append(EntityInterface $entity): void
@@ -112,7 +107,7 @@ abstract class AbstractRepository
         $queryBuilder = $queryBuilder
             ->update($this->getTableName())
             ->where($queryBuilder->expr()->eq('uid', $entity->getUid()));
-        $values = $this->getMapperClass()::fromEntity($entity)->toArray();
+        $values = $this->mapper->toArray($entity);
         foreach ($values as $property => $value) {
             $queryBuilder->set($property, $value);
         }
@@ -121,7 +116,7 @@ abstract class AbstractRepository
 
     private function appendNew(EntityInterface $entity): void
     {
-        $values = $this->getMapperClass()::fromEntity($entity)->toArray();
+        $values = $this->mapper->toArray($entity);
         $query = $this->createQueryBuilder()->insert($this->getTableName())->values($values);
         if ($query->execute() && method_exists($entity, 'setUid')) {
             $entity->setUid(

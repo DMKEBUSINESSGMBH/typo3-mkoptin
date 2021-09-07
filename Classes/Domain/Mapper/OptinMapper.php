@@ -31,7 +31,7 @@ namespace DMK\Optin\Domain\Mapper;
 
 use DMK\Optin\Domain\Model\EntityInterface;
 use DMK\Optin\Domain\Model\Optin;
-use Doctrine\DBAL\ForwardCompatibility\Result as QueryResult;
+use Doctrine\DBAL\Driver\Result as QueryResult;
 use InvalidArgumentException;
 
 /**
@@ -41,38 +41,15 @@ use InvalidArgumentException;
  */
 class OptinMapper extends AbstractMapper implements MapperInterface
 {
-    protected Optin $optin;
-
-    public function __construct(Optin $optin)
-    {
-        $this->optin = $optin;
-    }
-
-    public function getEntity(): Optin
-    {
-        return $this->optin;
-    }
-
-    public static function fromEntity(EntityInterface $entity): OptinMapper
-    {
-        if (!$entity instanceof Optin) {
-            throw new InvalidArgumentException();
-        }
-
-        return new OptinMapper($entity);
-    }
-
     /**
-     * @param QueryResult<string, string> $result
-     *
      * @return array<int, Optin>
      */
-    public static function fromResults(QueryResult $result): array
+    public function fromResults(QueryResult $result): array
     {
         $items = [];
 
         while (($record = $result->fetchAssociative()) !== false) {
-            $items[] = static::fromRecord($record)->getEntity();
+            $items[] = $this->fromRecord($record);
         }
 
         return $items;
@@ -81,34 +58,38 @@ class OptinMapper extends AbstractMapper implements MapperInterface
     /**
      * @param array<string, string> $record
      */
-    public static function fromRecord(array $record): OptinMapper
+    public function fromRecord(array $record): Optin
     {
         $optin = new Optin();
-        static::mapDefaultsFromRecord($record, $optin);
+        $this->mapDefaultsFromRecord($record, $optin);
 
         $optin->setEmail($record['email']);
-        $validationDate = static::mapDateFromString($record['validation_date']);
+        $validationDate = $this->mapDateFromString($record['validation_date']);
         if (null !== $validationDate) {
             $optin->setValidationDate($validationDate);
         }
         $optin->setIsValidated($record['is_validated'] > 0);
         $optin->setValidationHash($record['validation_hash']);
 
-        return new OptinMapper($optin);
+        return $optin;
     }
 
     /**
      * @return array<string, mixed>
      */
-    public function toArray(): array
+    public function toArray(EntityInterface $entity): array
     {
+        if (!$entity instanceof Optin) {
+            throw new InvalidArgumentException();
+        }
+
         return array_merge(
-            static::mapDefaultsToArray($this->optin),
+            $this->mapDefaultsToArray($entity),
             [
-                'email' => $this->optin->getEmail(),
-                'is_validated' => $this->optin->isValidated(),
-                'validation_hash' => $this->optin->getValidationHash(),
-                'validation_date' => static::mapDateToString($this->optin->getValidationDate()),
+                'email' => $entity->getEmail(),
+                'is_validated' => $entity->isValidated() ? 1 : 0,
+                'validation_hash' => $entity->getValidationHash(),
+                'validation_date' => $this->mapDateToString($entity->getValidationDate()),
             ]
         );
     }
