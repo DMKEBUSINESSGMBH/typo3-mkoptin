@@ -63,9 +63,10 @@ abstract class AbstractModelTestCase extends NimutTestingFrameworkTestCase
     public function getGetterAndSetterData(): array
     {
         $values = [];
+        $dataSet = 0;
 
         foreach ($this->getModelProperties() as $property => $value) {
-            $values[] = [$property, $value];
+            $values[$dataSet++.'_'.$property] = [$property, $value];
         }
 
         return $values;
