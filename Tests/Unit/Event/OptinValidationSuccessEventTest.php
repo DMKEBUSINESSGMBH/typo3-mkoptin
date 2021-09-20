@@ -27,7 +27,7 @@ declare(strict_types=1);
  * This copyright notice MUST APPEAR in all copies of the script!
  */
 
-namespace DMK\Optin\Tests\Controller;
+namespace DMK\Optin\Tests\Event;
 
 use DMK\Optin\Domain\Model\Optin;
 use DMK\Optin\Event\OptinValidationSuccessEvent;

@@ -27,7 +27,7 @@ declare(strict_types=1);
  * This copyright notice MUST APPEAR in all copies of the script!
  */
 
-namespace DMK\Optin\Tests\Fluid;
+namespace DMK\Optin\Tests\Mail;
 
 use DMK\Optin\Domain\Model\Optin;
 use DMK\Optin\Mail\MailProcessor;

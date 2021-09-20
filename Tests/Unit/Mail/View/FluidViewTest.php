@@ -27,7 +27,7 @@ declare(strict_types=1);
  * This copyright notice MUST APPEAR in all copies of the script!
  */
 
-namespace DMK\Optin\Tests\Fluid\View;
+namespace DMK\Optin\Tests\Mail\View;
 
 use DMK\Optin\Mail\View\FluidView;
 use Nimut\TestingFramework\TestCase\AbstractTestCase as NimutTestingFrameworkTestCase;
