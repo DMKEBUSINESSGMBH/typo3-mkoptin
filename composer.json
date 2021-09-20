@@ -11,7 +11,11 @@
     ],
     "autoload": {
         "psr-4": {
-            "DMK\\Optin\\": "Classes",
+            "DMK\\Optin\\": "Classes"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
             "DMK\\Optin\\Tests\\": "Tests/Unit"
         }
     },
