@@ -93,7 +93,7 @@ abstract class AbstractRepository
     public function append(EntityInterface $entity): void
     {
         if (0 === $entity->getUid()) {
-            $this->appendnew($entity);
+            $this->appendNew($entity);
 
             return;
         }
