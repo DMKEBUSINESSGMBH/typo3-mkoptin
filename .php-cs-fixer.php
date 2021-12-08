@@ -26,20 +26,10 @@ GNU General Public License for more details.
 This copyright notice MUST APPEAR in all copies of the script!
 EOF;
 
-$finder = \PhpCsFixer\Finder::create()
-    ->in(
-        [
-            __DIR__.'/Classes',
-            __DIR__.'/Tests',
-        ]
-    )
-    ->exclude(__DIR__.'/.development')
-    ->append(
-        [
-            __DIR__.'/Configuration/*.php',
-            __DIR__.'/ext_*.php',
-        ]
-    );
+$finder = PhpCsFixer\Finder::create()
+    ->exclude('Resources')
+    ->exclude('Documentation')
+    ->in(__DIR__);
 
 $config = new \PhpCsFixer\Config();
 return $config
