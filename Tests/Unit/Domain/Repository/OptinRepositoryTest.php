@@ -75,6 +75,20 @@ class OptinRepositoryTest extends NimutTestingFrameworkTestCase
     /**
      * @test
      */
+    public function getTableName()
+    {
+        $this->assertSame(
+            'tx_mkoptin_domain_model_optin',
+            $this->callInaccessibleMethod(
+                $this->repository,
+                'getTableName'
+            )
+        );
+    }
+
+    /**
+     * @test
+     */
     public function findOneByEmail()
     {
         $result = $this->prophesize(Result::class);
