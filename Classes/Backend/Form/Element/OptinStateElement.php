@@ -44,11 +44,6 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 class OptinStateElement extends AbstractFormElement
 {
     /**
-     * @var string
-     */
-    private static $llFile = 'LLL:EXT:mkoptin/Resources/Private/Language/locallang_db.xlf';
-
-    /**
      * Handler for single nodes.
      *
      * @return array<string, mixed> As defined in initializeResultArray() of AbstractNode
@@ -136,7 +131,7 @@ class OptinStateElement extends AbstractFormElement
     protected function translate(string $lllKey): string
     {
         return LocalizationUtility::translate(
-            static::$llFile.':'.$lllKey
+            'LLL:EXT:mkoptin/Resources/Private/Language/locallang_db.xlf:'.$lllKey
         );
     }
 }
