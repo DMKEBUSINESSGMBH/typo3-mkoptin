@@ -18,3 +18,6 @@ plugin {
         }
     }
 }
+
+### copy view config to module for backend/cli processing
+module.tx_mkoptin.view < plugin.tx_mkoptin.view
