@@ -2,11 +2,17 @@
     "name": "dmk/mkoptin",
     "description": "MK Optin Extension",
     "type": "typo3-cms-extension",
+    "keywords": [
+        "TYPO3 CMS",
+        "optin"
+    ],
+    "homepage": "http://www.dmk-ebusiness.de/",
     "license": "GPL-2.0-or-later",
     "authors": [
         {
             "name": "Michael Wagner",
-            "email": "michael.wagner@dmk-ebusiness.com"
+            "email": "michael.wagner@dmk-ebusiness.com",
+            "role": "Developer"
         }
     ],
     "autoload": {
