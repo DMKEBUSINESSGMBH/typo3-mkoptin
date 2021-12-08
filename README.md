@@ -1,16 +1,24 @@
 # MK Optin
 
-[![pipeline status](https://repo.dmknet.de/typo3-commons/mkoptin/badges/10.4/pipeline.svg)](https://repo.dmknet.de/typo3-commons/mkoptin/-/commits/10.4)
-[![coverage report](https://repo.dmknet.de/typo3-commons/mkoptin/badges/10.4/coverage.svg)](https://repo.dmknet.de/typo3-commons/mkoptin/-/commits/10.4)
+This TYPO3 extension provides an opt-in process via fluid mails.
 
-Stellt einen Opt-In Prozess bereit.
+What it does in short:
 
-* Versendet eine Opt-In-E-Mail.
-* Verarbeitet die verifizierung per Aktivierungslink in E-Mail.
-* Triggert ein Verifizierungs-Event.
-* Stellt Opt-In-Informationen in TCA bereit.
+* Can be triggered to send an Opt-In-E-Mail
+* Processes the verification via activation link in email.
+* triggers a opt-in validation success event.
+* Adds opt-in information to tca.
 
-## Starten eines Opt in prozesses:
+## Installation
+
+Install TYPO3 via composer.  
+From project root you need to run
+
+```
+composer require dmk/mkoptin
+```
+
+## Start a new opt-in process
 
 ```php
 class MyAwesomeManager
@@ -42,10 +50,11 @@ class MyAwesomeManager
 }
 ```
 
-## Registrieren eines Event-Listeners
+## register opt-in validation success event listeners
 
-Warum? Um dinge zu tun, nachdem die E-Mail verifiziert wurde, beispielsweise um
-den Datensatz zu aktivieren, oder Bestätigungs-E-Mails zu versenden.
+Why we need this?  
+To do things after the email has been verified, such as activate the record or
+send confirmation emails.
 
 ```yaml
 services:
@@ -83,10 +92,10 @@ class MyAwesomeManager
 }
 ```
 
-## Opt-In Informationen in TCA
+## Add opt-in information to TCA
 
-Um für einen Datensatz die Opt-In-Informationen mit auszugeben, ist folgendee
-TCA-Spalte zu ergänzen:
+In order to output the opt-in information for a data record, the following TCA
+column must be added:
 
 ```php
 return [
@@ -104,7 +113,7 @@ return [
 
 ![OptIn State Element][OptInStateElement]
 
-Wichtig: Aktuell muss das Feld im Datensatz immer `email` lauten!
+WARNING: Currently the field in the data record must always be `email`!
 
 ## Templates
 
@@ -122,7 +131,6 @@ plugin {
 
 ## @TODOs
 
-Tabellen-Email-Feld-Konfiguration implementieren.
-
+* Implement table email field configuration
 
 [OptInStateElement]: Documentation/Images/OptInStateElement.png "OptIn State Element"
