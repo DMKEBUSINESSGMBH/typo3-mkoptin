@@ -20,6 +20,7 @@
         }
     },
     "require": {
+        "php": "^7.4",
         "typo3/cms-core": "^10.4",
         "typo3/cms-backend": "^10.4",
         "typo3/cms-extbase": "^10.4",
@@ -31,6 +32,7 @@
         "helmich/typo3-typoscript-lint": "^2.5",
         "sebastian/phpcpd": "^5.0",
         "friendsofphp/php-cs-fixer": "^3.3",
+        "phpcompatibility/php-compatibility": "^9.3.5",
         "phpmd/phpmd": "^2.11",
         "phpstan/phpstan": "^1.2",
         "phpstan/extension-installer": "^1.1",
@@ -91,6 +93,10 @@
             "[ -e .Build/bin/php-cs-fixer ] || composer update",
             ".Build/bin/php-cs-fixer fix -v --dry-run --diff"
         ],
+        "test:phpcompatibility": [
+            "[ -e .Build/bin/phpcs ] || composer update",
+            ".Build/bin/phpcs --ignore=.Build/* -p . --standard=.Build/vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion 7.4"
+        ],
         "test:phpmd": [
             "[ -e .Build/bin/phpmd ] || composer update",
             ".Build/bin/phpmd ./Classes text phpmd.xml",
@@ -106,10 +112,11 @@
         ],
         "test:phpunit": [
             "[ -e .Build/bin/phpunit ] || composer update",
-            ".Build/bin/phpunit -c phpunit.xml --whitelist=./Classes"
+            ".Build/bin/phpunit --coverage-text --coverage-clover=.Build/coverage.xml -c phpunit.xml --whitelist=./Classes"
         ],
         "test": [
             "@test:phpcs",
+            "@test:phpcompatibility",
             "@test:phpmd",
             "@test:phpstan",
             "@test:phpcpd",
