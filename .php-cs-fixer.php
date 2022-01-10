@@ -1,10 +1,9 @@
 <?php
 
-$year = date('Y');
 $header = <<<EOF
 Copyright notice
 
-(c) {$year} DMK E-BUSINESS GmbH <dev@dmk-ebusiness.de>
+(c) DMK E-BUSINESS GmbH <dev@dmk-ebusiness.de>
 All rights reserved
 
 This file is part of the "mkoptin" Extension for TYPO3 CMS.
