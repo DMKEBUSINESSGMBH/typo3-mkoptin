@@ -4,4 +4,5 @@ parameters:
         - %currentWorkingDirectory%/Classes
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
-        - '#Constant TYPO3_MODE not found#'
+       - '#Parameter \#[\d] \.\.\.\$predicates of method TYPO3\\CMS\\Core\\Database\\Query\\QueryBuilder::where\(\) expects array<int, mixed>\|Doctrine\\DBAL\\Query\\Expression\\CompositeExpression, string given\.#'
+       - '#Constant TYPO3_MODE not found#'
