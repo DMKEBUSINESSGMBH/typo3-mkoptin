@@ -3,7 +3,7 @@
 ![TYPO3 compatibility](https://img.shields.io/badge/TYPO3-10.4-orange?maxAge=3600&style=flat-square&logo=typo3)
 [![Latest Stable Version](https://img.shields.io/packagist/v/dmk/mkoptin.svg?maxAge=3600&style=flat-square&logo=composer)](https://packagist.org/packages/dmk/mkoptin)
 [![Total Downloads](https://img.shields.io/packagist/dt/dmk/mkoptin.svg?maxAge=3600&style=flat-square)](https://packagist.org/packages/dmk/mkoptin)
-[![Build Status](https://img.shields.io/github/workflow/status/DMKEBUSINESSGMBH/typo3-mkoptin/PHP%20Checks.svg?maxAge=3600&style=flat-square&logo=github-actions)](https://github.com/DMKEBUSINESSGMBH/typo3-mkoptin/actions?query=workflow%3A%22PHP+Checks%22)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/DMKEBUSINESSGMBH/typo3-mkoptin/phpci.yml?branch=10.4&maxAge=3600&style=flat-square&logo=github-actions)](https://github.com/DMKEBUSINESSGMBH/typo3-mkoptin/actions/workflows/phpci.yml)
 [![Code Coverage](https://img.shields.io/badge/coverage-%3E%3D%2090%25-green?maxAge=3600&style=flat-square&logo=codecov)](https://github.com/DMKEBUSINESSGMBH/typo3-mkoptin/actions?query=workflow%3A%22PHP+Checks%22)
 [![License](https://img.shields.io/packagist/l/dmk/mkoptin.svg?maxAge=3600&style=flat-square&logo=gnu)](https://packagist.org/packages/dmk/mkoptin)
 
