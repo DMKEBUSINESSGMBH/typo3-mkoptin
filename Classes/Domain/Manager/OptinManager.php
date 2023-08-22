@@ -111,10 +111,10 @@ class OptinManager
 
         $optin = $this->optinRepository->findByIdentifier((int) $identifier);
 
-        if ((
+        if (
             $optin instanceof Optin &&
             $this->optinKeyCrypto->validateOptin($optin, $optinKey)
-        )) {
+        ) {
             return $optin;
         }
 

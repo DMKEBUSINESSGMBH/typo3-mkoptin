@@ -61,15 +61,15 @@ class OptinStateElement extends AbstractFormElement
         $email = $this->findOptinEmailFromTce();
         if (empty($email)) {
             return '<div style="color:#999;">'.$this->translate(
-                    'tx_mkoptin_domain_model_optin.nomail'
-                ).'</div>';
+                'tx_mkoptin_domain_model_optin.nomail'
+            ).'</div>';
         }
         $optin = $this->getOptinManager()->findOptinByEmail($email);
 
         if (null === $optin) {
             return '<div style="color:#C99;">'.$this->translate(
-                    'tx_mkoptin_domain_model_optin.nooptin'
-                ).'</div>';
+                'tx_mkoptin_domain_model_optin.nooptin'
+            ).'</div>';
         }
 
         return $this->renderOptinInformations($optin);
@@ -98,10 +98,10 @@ class OptinStateElement extends AbstractFormElement
         $tableName = $this->getCurrentTableName();
         $record = $this->getCurrentRecord();
 
-        if ((
+        if (
             'tx_mkoptin_domain_model_optin' === $tableName ||
             empty($record['email'])
-        )) {
+        ) {
             return '';
         }
 
@@ -112,17 +112,17 @@ class OptinStateElement extends AbstractFormElement
     {
         $content = '<!-- optin ['.$optin->getUid().'] -->';
         $content .= $this->translate(
-                'tx_mkoptin_domain_model_optin.email'
-            ).': '.$optin->getEmail();
+            'tx_mkoptin_domain_model_optin.email'
+        ).': '.$optin->getEmail();
         $content .= '<br />';
         $content .= $this->translate(
-                'tx_mkoptin_domain_model_optin.is_validated'
-            ).': '.($optin->getIsValidated() ? '&#x2714;' : '&#x2716;');
+            'tx_mkoptin_domain_model_optin.is_validated'
+        ).': '.($optin->getIsValidated() ? '&#x2714;' : '&#x2716;');
         $content .= '<br />';
         if ($optin->getIsValidated() && $optin->getValidationDate() instanceof DateTime) {
             $content .= $this->translate(
-                    'tx_mkoptin_domain_model_optin.validation_date'
-                ).': '.$optin->getValidationDate()->format(DATE_RSS);
+                'tx_mkoptin_domain_model_optin.validation_date'
+            ).': '.$optin->getValidationDate()->format(DATE_RSS);
         }
 
         return '<div style="color:'.($optin->getIsValidated() ? '#060' : '#C00').';">'.$content.'</div>';

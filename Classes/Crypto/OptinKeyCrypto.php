@@ -82,13 +82,13 @@ class OptinKeyCrypto
             $mailHash,
         ] = $this->decode($optinKey);
 
-        if ((
+        if (
             null !== $optin &&
             $optin->getUid() == $identifier &&
             !empty($validationHash) &&
             $optin->getValidationHash() === $validationHash &&
             md5($optin->getEmail()) === $mailHash
-        )) {
+        ) {
             return true;
         }
 
